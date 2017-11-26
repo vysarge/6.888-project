@@ -6,6 +6,7 @@ from nnsim.channel import Channel
 from nnsim.simulator import Finish
 
 from converter import Converter
+from naive_pruner import NaivePruner
 
 class ConverterTB(Module):
     def instantiate(self):
@@ -14,23 +15,27 @@ class ConverterTB(Module):
         self.input_size = 4
         self.block_size = 12
         self.in_sets = self.block_size // self.input_size
+        self.num_nonzero = 5
+        self.preserve_order = True
 
         self.in_chn = Channel()
+        self.mid_chn = Channel()
         self.out_chn = Channel()
 
-        self.dut = Converter(self.in_chn, self.out_chn, self.input_size, self.block_size)
+        self.converter = Converter(self.in_chn, self.mid_chn, self.input_size, self.block_size)
+        self.pruner = NaivePruner(self.mid_chn,self.out_chn,self.num_nonzero,self.preserve_order)
 
         self.iterations = 10
         self.iteration = 0
         self.curr_set = 0
         self.out_counter = 0
-        self.test_data = [[randint(1,5) if randint(0,3)>2 else 0\
+        self.test_data = [[randint(1,5) if randint(0,3)>1 else 0\
             for j in range(self.block_size)]\
             for i in range(self.iterations+1)] 
             # send in one extra iteration to flush out last outputs
         print("Stimulus:")
         print("[")
-        for i in range(len(self.test_data)):
+        for i in range(len(self.test_data)-1):
             print(self.test_data[i])
         print("]")
 

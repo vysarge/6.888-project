@@ -17,12 +17,10 @@ class Converter(Module):
         self.curr_set = 0 # Counter for where we are currently in the buffer
 
         # vars for marking where we are in the buffer etc
-        #self.in_marker = 0
         self.out_marker = 0
 
 
         # Vars for serial output
-        #self.transfer_marker = 0
         self.prev_vals = []
         
         # Buffer.  Use for accumulating input values
@@ -70,8 +68,6 @@ class Converter(Module):
         if (self.in_chn.valid() and not \
                 ((self.curr_set + 1) % self.in_sets) == self.out_marker // self.input_size):
             data = self.in_chn.pop()
-            #imin = self.curr_set * self.input_size
-            #imax = imin + self.input_size
             self.buffer[self.curr_set] = data
             self.curr_set += 1
             if (self.curr_set == self.in_sets):
