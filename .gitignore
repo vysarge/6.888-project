@@ -1,0 +1,3 @@
+nnsim.egg-info/*
+nnsim/__pycache__/*
+pruning/__pycache__/*
