@@ -26,7 +26,8 @@ class ConverterTB(Module):
         self.out_counter = 0
         self.test_data = [[randint(1,5) if randint(0,3)>2 else 0\
             for j in range(self.block_size)]\
-            for i in range(self.iterations)]
+            for i in range(self.iterations+1)] 
+            # send in one extra iteration to flush out last outputs
         print("Stimulus:")
         print("[")
         for i in range(len(self.test_data)):
@@ -34,7 +35,7 @@ class ConverterTB(Module):
         print("]")
 
     def tick(self):
-        if (self.in_chn.vacancy() and not self.iteration == self.iterations):
+        if (self.in_chn.vacancy() and not self.iteration == self.iterations+1):
             imin = self.curr_set*self.input_size
             imax = imin+self.input_size
             data = [self.test_data[self.iteration][i] for i in range(imin, imax)]
