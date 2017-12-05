@@ -27,6 +27,8 @@ class NaivePruner(Module):
 
         # data structure for storing running nonzero activations
         self.buffer = [[0 for i in range(self.num_nonzero)] for j in [0,1]]
+        self.data_out = [[0 for i in range(3)] for j in range(self.num_nonzero)]
+        #self.data_out = [0 for i in range(3*self.num_nonzero)]
 
         # channels
         self.in_chn = in_chn
@@ -37,20 +39,33 @@ class NaivePruner(Module):
         if not (self.read_from == self.write_to) and self.out_chn.vacancy():
             data = self.buffer[self.read_from][self.out_marker]
             if (self.out_marker == self.prev_valid_marker-1):
-                # if reached the last valid activation, switch to the other buffer
+                # if reached the last valid activation
+                data.append(1) # make sure to add termination bit
+                self.data_out[self.out_marker] = data
+                self.out_chn.push(self.data_out)
+                #print("Pruner out:")
+                #print(self.data_out)
+
+                # reset counters, switch to the other buffer
+                self.data_out = [[0 for i in range(3)] for j in range(self.num_nonzero)]
                 self.out_marker = 0
                 self.read_from = 1-self.read_from
-                data.append(1) # make sure to add termination bit
             else:
                 data.append(0)
+                self.data_out[self.out_marker] = data
                 self.out_marker += 1
-            self.out_chn.push(data)
+
+
+            
+
+            #self.out_chn.push(data)
             
         
         # Load values from input channel into buffer
         # and perform pruning
         if (self.in_chn.valid() and not self.ready_to_switch):
             data = self.in_chn.pop()
+            #print(data)
             if (self.valid_marker < self.num_nonzero): # data[2] no longer matters
                 self.buffer[self.write_to][self.valid_marker] = [data[0], data[1]]
                 self.valid_marker += 1
