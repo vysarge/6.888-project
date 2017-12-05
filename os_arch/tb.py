@@ -3,9 +3,9 @@ from nnsim.channel import Channel
 from osarch import OSArch
 from stimulus import Stimulus
 
-debug = True # allows switching between a main testing conv and a debug one
-debugStimulus = True # if true, uses integer and increasing values for inputs, weights, and biases
-keepMaxValues = True # if true, always keeps num_nonzero values in each block
+debug = False # allows switching between a main testing conv and a debug one
+debugStimulus = False # if true, uses integer and increasing values for inputs, weights, and biases
+keepMaxValues = False # if true, always keeps num_nonzero values in each block
 
 class OSArchTB(Module):
     def instantiate(self):
@@ -15,7 +15,7 @@ class OSArchTB(Module):
             self.image_size = (4, 4)
             self.filter_size = (3, 3)
             self.in_chn = 2
-            self.out_chn = 2
+            self.out_chn = 4
             self.block_size = 2
             self.num_nonzero = 2
         else:
@@ -23,10 +23,9 @@ class OSArchTB(Module):
             self.filter_size = (3, 3)
             self.in_chn = 16
             self.out_chn = 8
-            self.block_size = 8
-            self.num_nonzero = 4
+            self.block_size = 4
+            self.num_nonzero = 2
 
-        #self.arr_x = 1
         self.arr_y = self.out_chn
 
         self.input_chn = Channel()
@@ -34,8 +33,6 @@ class OSArchTB(Module):
 
         ifmap_glb_depth = (self.filter_size[1] + (self.filter_size[0]-1)*\
             self.image_size[1]) * self.in_chn // self.block_size
-        #psum_glb_depth = self.image_size[0]*self.image_size[1]* \
-        #        self.out_chn//self.arr_y
         psum_glb_depth = self.out_chn // self.block_size
         weight_glb_depth = self.filter_size[0]*self.filter_size[1]* \
                 self.in_chn*self.out_chn//self.block_size

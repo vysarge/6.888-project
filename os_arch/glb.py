@@ -29,7 +29,11 @@ class IFMapWeightsGLB(Module):
         self.ifmap_glb_depth = ifmap_glb_depth
 
         self.wsram = SRAM(weights_glb_depth, block_size)
-        self.wlast_read = Channel(3)
+        self.wlast_read = Channel(1)
+        # Channel depth of one here prevents SRAM reads from colliding
+        # was having issues with a later read 'replacing' an earlier one
+        # and thus getting the wrong data
+        # having only one extant write on an SRAM at a time prevents this
         self.weights_glb_depth = weights_glb_depth
 
         # Channel to hold indices of weights that need to be sent
@@ -117,7 +121,7 @@ class IFMapWeightsGLB(Module):
                 data = self.weights_wr_chn.pop()
                 self.raw_stats['wr'] += len(data)
                 #print(self.addr)
-                #print("weights (wi glb) at addr {}".format(self.addr))
+                #print("weights (iw glb) at addr {}".format(self.addr))
                 #print(data)
                 #print(self.addr)
                 self.wsram.request(WR, self.addr, np.asarray(data))
@@ -127,7 +131,10 @@ class IFMapWeightsGLB(Module):
                 if (self.addr == max_addr):
                     self.addr = self.out_chn // self.block_size
                     self.wwr_done = True
-                    print("Done storing weights (wi glb)")
+                    #print("Done storing weights (wi glb)")
+                    #print("--------------------------")
+                    #print(self.wsram.data)
+                    #print("--------------------------")
                 
 
         # within this block of code self.addr is re-used
@@ -135,11 +142,13 @@ class IFMapWeightsGLB(Module):
         # and refers to the current block of filters (last index of the four)
         # that is being read
         else:
-            #print(self.weights_to_send.valid())
+            # Catch addresses that correspond to nonzero inputs
+            # search "self.weights_to_send.push(waddr)" below
             if (self.weights_to_send.valid() and self.addr == self.out_chn // self.block_size):
                 self.base_addr = self.weights_to_send.pop()
                 self.addr = 0
-                #print(self.base_addr)
+            # cycle through channels using self.addr
+            # make requests to memory; will pick these up in the next if statement below
             elif (self.wlast_read.vacancy() and not self.addr == self.out_chn // self.block_size):
                 full_addr = self.base_addr + self.addr
                 self.wsram.request(RD, full_addr)
@@ -147,6 +156,7 @@ class IFMapWeightsGLB(Module):
                 #print("Request weights (wi glb):")
                 #print(full_addr)
                 self.addr += 1
+        # catch requests from memory; send results to WeightsNoC
         if self.wlast_read.valid() and self.weights_rd_chn.vacancy(1):
             is_zero = self.wlast_read.pop()
             data = [e for e in self.wsram.response()]
@@ -172,6 +182,7 @@ class IFMapWeightsGLB(Module):
         if not (self.ifmap_done and not self.ilast_read.valid() and not self.ready_to_output):
             verbose = False
             
+            # shorthand values that will be useful later
             num_iteration = self.filter_size[0]*self.filter_size[1]
             offset_x = (self.filter_size[0] - 1)//2
             offset_y = (self.filter_size[1] - 1)//2
@@ -179,10 +190,6 @@ class IFMapWeightsGLB(Module):
             filter_y = self.iteration // self.filter_size[0] - offset_y
             in_sets = self.in_chn // self.block_size
             out_sets = self.out_chn // self.block_size
-            #print(filter_x)
-            #print(self.data_idx == self.num_nonzero)
-            #print("{} =?= {}".format(self.data_idx, self.num_nonzero))
-            #print("----")
             if not self.iwr_done and not self.ready_to_output:
                 # Write to GLB
                 if self.ifmap_wr_chn.valid():
@@ -223,9 +230,6 @@ class IFMapWeightsGLB(Module):
                     if (not is_zero):
                         self.curr_data = [e for e in self.isram.response()]
                         self.data_idx = 0
-
-                        #wdata = [e for e in self.wsram.response()]
-                        #self.curr_weights = wdata
                     else:
                         increment_vals = True
                 elif (not self.data_idx == self.num_nonzero and self.weights_to_send.vacancy() and self.base_addr_wo_chn >= 0):

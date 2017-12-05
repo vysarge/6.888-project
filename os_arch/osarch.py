@@ -29,8 +29,6 @@ class OSArch(Module):
         self.ifmap_wr_chn = Channel()
         self.psum_wr_chn = Channel()
         self.weights_wr_chn = Channel()
-        arr_x = 1
-        chn_per_word = 1
         self.deserializer = InputDeserializer(self.input_chn, self.ifmap_wr_chn,
                 self.weights_wr_chn, self.psum_wr_chn, arr_y,
                 block_size, num_nonzero)
@@ -59,12 +57,7 @@ class OSArch(Module):
         self.pe_ifmap_chns = ModuleList()
         self.pe_filter_chns = ModuleList()
         self.pe_psum_in_chns = ModuleList()
-        #self.pe_psum_chns_in.append(ModuleList())
         self.pe_psum_out_chns = ModuleList()
-        #self.pe_psum_chns_out.append(ModuleList())
-        #for x in range(self.arr_x):
-        #    self.pe_psum_chns_in[0].append(Channel(32))
-        #    self.pe_psum_chns_out[0].append(Channel(32))
 
         # Actual array instantiation
         for y in range(self.arr_y):

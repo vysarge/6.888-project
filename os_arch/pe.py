@@ -49,7 +49,7 @@ class PE(Module):
             #print("{},{}: {} ifmap and {} filter".format(self.loc_y, self.loc_x, self.ifmap_chn.valid(), self.filter_chn.valid()))
             if (self.ifmap_chn.valid() and self.filter_chn.valid()):
                 if (not self.value.rd()[0] == self.ifmap_chn.peek()[0]):
-                    #print("{},{} sending output {}".format(self.loc_y, self.loc_x, self.value.rd()[0]))
+                    #print("{},{} sending output {}".format(self.loc_y, self.loc_x, self.value.rd()))
                     self.psum_out_chn.push([self.value.rd()[0], self.value.rd()[1]])
                     #print("{},{} push".format(self.loc_y, self.loc_x))
                     self.fmap_idx = 0
@@ -62,20 +62,17 @@ class PE(Module):
                     
                     self.raw_stats['pe_mac'] += 1
 
-                    #if (self.loc_y == 1 and self.loc_x == 0):
-                    #    print("({},{}, loc {}): {} + {} * {}".format(self.loc_y, self.loc_x,\
-                    #        loc_tag, self.value.rd()[1], weight, ifmap))
+                    #if (self.loc_y == 0 and self.loc_x == 0):
+                    #    print("({},{}, loc {}): {} + {} * {} = {}".format(self.loc_y, self.loc_x,\
+                    #        loc_tag, self.value.rd()[1], weight, ifmap,\
+                    #        self.value.rd()[1]+ifmap*weight))
                     
-                    #print([loc_tag, self.value.rd()[1]+ifmap*weight])
                     self.value.wr([loc_tag, self.value.rd()[1]+ifmap*weight])
                     
                 
                    
 
         if (self.fmap_idx == 0):
-            #print("{},{}: {} psum & {} ifmap & {} filter".format(\
-            #    self.loc_y, self.loc_x, self.psum_in_chn.valid(),\
-            #    self.ifmap_chn.valid(), self.filter_chn.valid()))
             if (self.psum_in_chn.valid() and self.ifmap_chn.valid() and self.filter_chn.valid()):
                 in_psum = self.psum_in_chn.pop()
                 loc_tag, ifmap = self.ifmap_chn.pop()
@@ -86,35 +83,3 @@ class PE(Module):
 
                 self.value.wr([loc_tag, in_psum+ifmap*weight])
                 
-                #if (self.fmap_idx == self.fmap_per_iteration):
-                #    #print("{},{} sending output".format(self.loc_y, self.loc_x))
-                #    self.psum_out_chn.push([loc_tag, in_psum+ifmap*weight])
-                #    self.fmap_idx = 0
-                #    self.iteration += 1
-                #else:
-                #    self.value.wr([loc_tag, in_psum+ifmap*weight])
-                #    #print([loc_tag, in_psum+ifmap*weight])
-                    
-                #if (self.loc_y == 0 and self.loc_x == 0):
-                #    print("({},{}): {} + {} * {}".format(self.loc_y, self.loc_x, in_psum, weight, ifmap))
-        #elif (self.fmap_idx < self.fmap_per_iteration):
-         
-            
-        #if self.psum_in_chn.valid() and self.ifmap_chn.valid() and \
-        #        self.filter_chn.valid():
-        #    if self.psum_out_chn.vacancy():
-        #        in_psum = self.psum_in_chn.pop()
-        #        ifmap = self.ifmap_chn.pop()
-        #        weight = self.filter_chn.pop()
-        #        if (self.loc_y == 0 and self.loc_x == 0):
-        #            print("({},{}): {} + {} * {}".format(self.loc_y, self.loc_x, in_psum, weight, ifmap))
-        #        self.psum_out_chn.push(in_psum+ifmap*weight)
-        #        self.raw_stats['pe_mac'] += 1
-        #        # print "PE(%d, %d) fired @ (%d, %d)" % (self.loc_x, self.loc_y,
-        #        #         self.iteration, self.fmap_idx)
-        #
-        #        self.fmap_idx += 1
-        #        #if self.fmap_idx == self.fmap_per_iteration:
-        #        #    self.fmap_idx = 0
-        #        #    self.filter_chn.pop()
-        #        #    self.iteration += 1
