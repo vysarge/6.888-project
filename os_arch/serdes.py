@@ -121,18 +121,7 @@ class InputSerializer(Module):
                     self.iteration = 0
                     #print("Weights done")
                     self.weights_done = True
-                
-                #self.curr_set += 1
-                #if self.curr_chn == in_sets: # Loops through sets, then filter elements, then filters
-                #    self.curr_chn = 0
-                #    self.iteration += 1
-                #if self.iteration == num_iteration:
-                #    self.curr_filter += 1
-                #    self.iteration = 0
-                #if self.curr_filter == self.arr_x:
-                #    self.curr_filter = 0
-                #    self.curr_set = 0
-                #    self.weights_done = True
+
         elif self.arch_input_chn.vacancy() and self.bias_set < out_sets:
             cmin = self.bias_set*self.block_size
             cmax = cmin + self.block_size
@@ -161,23 +150,7 @@ class InputSerializer(Module):
                 if (self.curr_y == self.image_size[1]):
                     self.curr_y = 0
                     self.curr_x += 1
-                    #if (self.curr_x % self.arr_y == 0):
-                    #    self.send_bias = True
-                #if (self.curr_x == self.image_size[0]):
-                #    self.send_bias = True
-                        
-                #else:
-                #    cmin = self.curr_set*self.chn_per_word
-                #    cmax = cmin + self.chn_per_word
-                #    # Write bias to glb
-                #    data = np.array([ self.bias[c] for c in range(cmin, cmax) ])
-                #    #print("bias")
-                #    #print(data)
-                #    self.curr_set += 1
-                #    if (self.curr_set == out_sets):
-                #        self.curr_set = 0
-                #        self.send_bias = False
-                #print(data)
+                    
                 self.convert_chn.push(data)
 
                 if (self.curr_x == self.image_size[0]):

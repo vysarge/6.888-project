@@ -30,7 +30,7 @@ class Stimulus(Module):
         self.deserializer = OutputDeserializer(self.output_chn, 
             self.arr_y, self.block_size, self.num_nonzero)
 
-    def configure(self, image_size, filter_size, in_chn, out_chn, debug, keep_max):
+    def configure(self, image_size, filter_size, in_chn, out_chn, debug, keep_max, do_premature_prune):
         # Test data
         #ifmap = np.zeros((image_size[0], image_size[1],
         #    in_chn)).astype(np.int64)
@@ -47,23 +47,30 @@ class Stimulus(Module):
                 out_chn)).astype(np.int64)
             bias = np.random.normal(0, 10, out_chn).astype(np.int64)
         
-        if (self.num_nonzero < self.block_size or not keep_max):
-            for x in range(image_size[0]):
-                for y in range(image_size[1]):
-                    for c in range(in_chn//self.block_size):
-                        num_to_keep = self.num_nonzero if keep_max else np.random.randint(0,self.num_nonzero+1)
-                        to_keep = np.random.choice(self.block_size, num_to_keep, replace=False)
-                        cmin = c*self.block_size
-                        cmax = cmin + self.block_size
-                        ifmap[x][y][cmin:cmax] = [ifmap[x][y][c] if c in to_keep else 0 for c in range(cmin, cmax)]
-        print(filter_size)
-        print("From stimulus:")
-        print("ifmap")
-        print(ifmap)
-        print("weights")
-        print(weights)
-        print("bias")
-        print(bias)
+        # Randomly zeros out a number of weights to ensure 
+        if (do_premature_prune):
+            print("WARNING: Doing a premature prune!")
+            print("This will give inaccurate outputs")
+            print("Use only for validation of architecture")
+            print("------------------------------------------------------------------")
+            if (self.num_nonzero < self.block_size or not keep_max):
+                for x in range(image_size[0]):
+                    for y in range(image_size[1]):
+                        for c in range(in_chn//self.block_size):
+                            num_to_keep = self.num_nonzero if keep_max else np.random.randint(0,self.num_nonzero+1)
+                            to_keep = np.random.choice(self.block_size, num_to_keep, replace=False)
+                            cmin = c*self.block_size
+                            cmax = cmin + self.block_size
+                            ifmap[x][y][cmin:cmax] = [ifmap[x][y][c] if c in to_keep else 0 for c in range(cmin, cmax)]
+        else:
+            print("Don't worry about validation failure messages if using pruning")
+        #print("From stimulus:")
+        #print("ifmap")
+        #print(ifmap)
+        #print("weights")
+        #print(weights)
+        #print("bias")
+        #print(bias)
         ofmap = np.zeros((image_size[0], image_size[1],
             out_chn)).astype(np.int64)
 

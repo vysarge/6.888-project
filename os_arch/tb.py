@@ -3,9 +3,11 @@ from nnsim.channel import Channel
 from osarch import OSArch
 from stimulus import Stimulus
 
-debug = False # allows switching between a main testing conv and a debug one
+debug = True # allows switching between a main testing conv and a debug one
 debugStimulus = False # if true, uses integer and increasing values for inputs, weights, and biases
-keepMaxValues = False # if true, always keeps num_nonzero values in each block
+keepMaxValues = True # if true, always keeps num_nonzero values in each block
+do_premature_prune = True # if true, will pre-prune inputs to allow output deserializer to do correct validation
+# For actual test runs, should be False, False, True, False
 
 class OSArchTB(Module):
     def instantiate(self):
@@ -17,14 +19,14 @@ class OSArchTB(Module):
             self.in_chn = 2
             self.out_chn = 4
             self.block_size = 2
-            self.num_nonzero = 2
+            self.num_nonzero = 1
         else:
             self.image_size = (16, 16)
             self.filter_size = (3, 3)
             self.in_chn = 16
             self.out_chn = 8
             self.block_size = 4
-            self.num_nonzero = 2
+            self.num_nonzero = 4
 
         self.arr_y = self.out_chn
 
@@ -46,7 +48,7 @@ class OSArchTB(Module):
 
     def tick(self):
         if not self.configuration_done:
-            self.stimulus.configure(self.image_size, self.filter_size, self.in_chn, self.out_chn, debugStimulus, keepMaxValues)
+            self.stimulus.configure(self.image_size, self.filter_size, self.in_chn, self.out_chn, debugStimulus, keepMaxValues, do_premature_prune)
             self.dut.configure(self.image_size, self.filter_size, self.in_chn, self.out_chn)
             self.configuration_done = True
 
