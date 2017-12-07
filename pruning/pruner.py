@@ -53,13 +53,9 @@ class NaivePruner(Module):
             else:
                 data.append(0)
                 self.data_out[self.out_marker] = data
-                self.out_marker += 1
+                self.out_marker += 1            
 
-
-            
-
-            #self.out_chn.push(data)
-            
+            #self.out_chn.push(data)        
         
         # Load values from input channel into buffer
         # and perform pruning

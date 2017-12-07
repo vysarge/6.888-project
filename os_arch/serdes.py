@@ -6,13 +6,14 @@ from nnsim.channel import Channel
 import sys
 sys.path.append('../pruning')
 
-from naive_pruner import NaivePruner
+#from naive_pruner import NaivePruner
 from converter import Converter
+import pruner
 
 import numpy as np
 
 class InputSerializer(Module):
-    def instantiate(self, arch_input_chn, arr_y, block_size, num_nonzero):
+    def instantiate(self, arch_input_chn, arr_y, block_size, num_nonzero, pruner_name):
         # PE static configuration (immutable)
         #self.arr_x = arr_x
         self.arr_y = arr_y
@@ -29,12 +30,18 @@ class InputSerializer(Module):
         # then all inputs by pruner
         self.converter = Converter(self.convert_chn, self.prune_chn, \
             self.block_size, self.block_size)
-        self.pruner = NaivePruner(self.prune_chn,self.arch_input_chn, \
+        # self.pruner = NaivePruner(self.prune_chn,self.arch_input_chn, \
+        #     self.num_nonzero,True)
+
+        #user defined pruner for this layer, default to naive pruner
+        self.pruner = getattr(pruner, pruner_name)(self.prune_chn,self.arch_input_chn, \
             self.num_nonzero,True)
 
+        
         self.ifmap = None
         self.weights = None
         self.bias = None
+
 
         self.image_size = (0, 0)
         self.filter_size = (0, 0)
@@ -79,6 +86,8 @@ class InputSerializer(Module):
         self.curr_y = 0
         self.bias_set = 0
         #self.send_bias = False
+
+
 
     def tick(self):
         if self.pass_done.rd():

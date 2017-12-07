@@ -16,7 +16,7 @@ def conv(x, W, b):
     return y
 
 class Stimulus(Module):
-    def instantiate(self, arr_y, block_size, num_nonzero, input_chn, output_chn):
+    def instantiate(self, arr_y, block_size, num_nonzero, input_chn, output_chn, pruner_name):
         # PE static configuration (immutable)
         self.arr_y = arr_y
         self.block_size = block_size
@@ -26,27 +26,31 @@ class Stimulus(Module):
         self.output_chn = output_chn
 
         self.serializer = InputSerializer(self.input_chn, 
-            self.arr_y, self.block_size, self.num_nonzero)
+            self.arr_y, self.block_size, self.num_nonzero, pruner_name)
         self.deserializer = OutputDeserializer(self.output_chn, 
             self.arr_y, self.block_size, self.num_nonzero)
+        self.ofmap = None
 
-    def configure(self, image_size, filter_size, in_chn, out_chn, debug, keep_max, do_premature_prune):
+    def configure(self, image_size, filter_size, in_chn, out_chn, ifmap, weights, bias, debug, keep_max, do_premature_prune):
         # Test data
         #ifmap = np.zeros((image_size[0], image_size[1],
         #    in_chn)).astype(np.int64)
 
-        if (debug): # Test values that should be easier to debug
-            ifmap = np.reshape(np.arange(image_size[0]*image_size[1]*in_chn), (image_size[0],image_size[1],in_chn)).astype(np.int64)
-            weights = np.reshape(np.arange(filter_size[0]*filter_size[1]*in_chn*out_chn),
-                                 (filter_size[0],filter_size[1],in_chn,out_chn)).astype(np.int64)
-            bias = np.arange(out_chn).astype(np.int64)
-        else:
-            ifmap = np.random.normal(0, 10, (image_size[0], image_size[1],
-                in_chn)).astype(np.int64)
-            weights = np.random.normal(0, 10, (filter_size[0], filter_size[1], in_chn,
-                out_chn)).astype(np.int64)
-            bias = np.random.normal(0, 10, out_chn).astype(np.int64)
+        # if (debug): # Test values that should be easier to debug
+        #     ifmap = np.reshape(np.arange(image_size[0]*image_size[1]*in_chn), (image_size[0],image_size[1],in_chn)).astype(np.int64)
+        #     weights = np.reshape(np.arange(filter_size[0]*filter_size[1]*in_chn*out_chn),
+        #                          (filter_size[0],filter_size[1],in_chn,out_chn)).astype(np.int64)
+        #     bias = np.arange(out_chn).astype(np.int64)
+        # else:
+        #     ifmap = np.random.normal(0, 10, (image_size[0], image_size[1],
+        #         in_chn)).astype(np.int64)
+        #     weights = np.random.normal(0, 10, (filter_size[0], filter_size[1], in_chn,
+        #         out_chn)).astype(np.int64)
+        #     bias = np.random.normal(0, 10, out_chn).astype(np.int64)
         
+
+
+
         # Randomly zeros out a number of weights to ensure 
         if (do_premature_prune):
             print("WARNING: Doing a premature prune!")
@@ -71,11 +75,11 @@ class Stimulus(Module):
         #print(weights)
         #print("bias")
         #print(bias)
-        ofmap = np.zeros((image_size[0], image_size[1],
+        self.ofmap = np.zeros((image_size[0], image_size[1],
             out_chn)).astype(np.int64)
 
         # Reference Output
         reference = conv(ifmap, weights, bias)
 
         self.serializer.configure(ifmap, weights, bias, in_chn, out_chn, image_size, filter_size)
-        self.deserializer.configure(ofmap, reference, image_size, out_chn)
+        self.deserializer.configure(self.ofmap, reference, image_size, out_chn)
