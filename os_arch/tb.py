@@ -120,7 +120,7 @@ if __name__ == "__main__":
         if consecutive_conv_layers:
             ifmap = ofmap
         else:
-            ifmap = ifmap_l[l]
+            ifmap = ifmap_l[l+1]
 
 
 
