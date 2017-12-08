@@ -23,7 +23,9 @@ class ConverterTB(Module):
         self.out_chn = Channel()
 
         self.converter = Converter(self.in_chn, self.mid_chn, self.input_size, self.block_size)
-        self.pruner = ClusteredPruner(self.mid_chn,self.out_chn,self.num_nonzero, self.block_size, self.preserve_order)
+        #self.pruner = NaivePruner(self.mid_chn,self.out_chn,self.num_nonzero, self.block_size, self.preserve_order)
+        #self.pruner = ClusteredPruner(self.mid_chn,self.out_chn,self.num_nonzero, self.block_size, self.preserve_order)
+        self.pruner = ThresholdPruner(self.mid_chn,self.out_chn,self.num_nonzero, self.block_size, self.preserve_order)
 
         self.iterations = 10
         self.iteration = 0
