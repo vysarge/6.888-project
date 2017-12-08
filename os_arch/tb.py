@@ -3,6 +3,7 @@ from nnsim.channel import Channel
 from osarch import OSArch
 from stimulus import Stimulus
 import numpy as np
+from swlayers import *
 
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
@@ -71,8 +72,6 @@ class OSArchTB(Module):
 
 
 
-
-
 #simulate for a single conv layer with all needed inputs
 def one_layer(image_size, filter_size, in_chn, out_chn, block_size, ifmap, weights, bias, num_nonzero, pruner_name = "NaivePruner"):
     os_tb = OSArchTB(image_size, filter_size, in_chn, out_chn, block_size, ifmap, weights, bias, pruner_name, num_nonzero)
@@ -85,74 +84,119 @@ if __name__ == "__main__":
     from nnsim.simulator import run_tb
     from swlayers import *
 
+    fakeInputs = False
     ######## fake inputs #########################
-    num_layer = 3
-    filter_size = [(3,3) for layer in range(num_layer)]
-    image_size = [(4,4) for layer in range(num_layer)]
-    in_chn = [2 for layer in range(num_layer)]
-    out_chn = [4 for layer in range(num_layer)]
-    block_size = [2 for layer in range(num_layer)]
-    num_nonzero =[1 for layer in range(num_layer)]
+    if (fakeInputs):
+        num_layer = 3
+        filter_size = [(3,3) for layer in range(num_layer)]
+        image_size = [(4,4) for layer in range(num_layer)]
+        in_chn = [2 for layer in range(num_layer)]
+        out_chn = [4 for layer in range(num_layer)]
+        block_size = [2 for layer in range(num_layer)]
+        num_nonzero =[1 for layer in range(num_layer)]
 
-    ifmap_l = [np.random.normal(0, 10, (image_size[0][0], image_size[0][1],
-        in_chn[0])).astype(np.int64)for layer in range(num_layer)]
+        ifmap_l = [np.random.normal(0, 10, (image_size[0][0], image_size[0][1],
+            in_chn[0])).astype(np.int64)for layer in range(num_layer)]
 
-    weights = [np.random.normal(0, 10, (filter_size[0][0], filter_size[0][1], in_chn[0],
-        out_chn[0])).astype(np.int64)for layer in range(num_layer)]
+        weights = [np.random.normal(0, 10, (filter_size[0][0], filter_size[0][1], in_chn[0],
+            out_chn[0])).astype(np.int64)for layer in range(num_layer)]
 
-    bias = [np.random.normal(0, 10, out_chn[0]).astype(np.int64) for layer in range(num_layer)]
+        bias = [np.random.normal(0, 10, out_chn[0]).astype(np.int64) for layer in range(num_layer)]
 
-    #pruner_name = "NaivePruner"
-    pruner_name = "ThresholdPruner"
-    pruner_name = "ClusteredPruner"
+        #pruner_name = "NaivePruner"
+        pruner_name = "ThresholdPruner"
+        pruner_name = "ClusteredPruner"
+
+        #consecutive_conv_layers:
+        #       True: no pooling or other layers between the conv layers, the simulator takes in the very fisrt ifmap and run consecutively
+        #       False: each layer's ifmap is supplied in the ifmap list
+        
+        #consecutive_conv_layers = False
+        consecutive_conv_layers = True
+
+        if consecutive_conv_layers:
+            print("assuming the simulator is running consective conv layers")
+        else:
+            print("inconsecutive conv layers: each layer's ifmap is supplied by the user")
+        
+        for l in range(num_layer):
+            if l == 0:
+                ifmap = ifmap_l[l]
+            ofmap = one_layer(image_size[l], filter_size[l], in_chn[l], out_chn[l], block_size[l], ifmap, weights[l], bias[l],  num_nonzero[l], pruner_name)
+            if consecutive_conv_layers:
+                ifmap = ofmap
+            else:
+                ifmap = ifmap_l[l+1]
     ######## real inputs #########################
-    test_data = mnist.test.next_batch(1)
-    inputs = np.asarray(test_data[0]).astype(np.int64)
-    expected_outputs = test_data[1]
-    ifmap_l = []
-    
-    inputs = inputs.reshape((-1, 28, 28, 1))
-    print(np.shape(inputs[0]))
-    padded_inputs = np.lib.pad(inputs[0], ((2,2),(2,2),(0,0)), 'constant')
-    print(np.shape(padded_inputs))
-    ifmap_l.append(padded_inputs)
+    else:
+        # Settings
+        # The middle two will be used for running those layers in simulation
+        image_size = [(32, 32), (32, 32), (16,16), (8,8)]
+        filter_size = [(3,3), (3,3), (3,3), (None,None)]
+        in_chn = [1, 16, 16, 8]
+        out_chn = [16, 16, 8, None]
+        block_size = [8, 8, 8, None]
+        num_nonzero = [8, 8, 8, None]
+        pruner_name = "NaivePruner"
 
-    saved_weights = np.load("../cnn/")
+        print("Input generation-------------------------------")
+        test_data = mnist.test.next_batch(1)
+        inputs = np.asarray(test_data[0]).astype(np.int64)
+        expected_outputs = test_data[1]
+        #ifmap_l = []
+        
+        inputs = inputs.reshape((-1, 28, 28, 1))
+        padded_inputs = np.lib.pad(inputs[0], ((2,2),(2,2),(0,0)), 'constant')
+        #ifmap_l.append(padded_inputs)
+        ifmap = padded_inputs
 
-    for layer in range(num_layer):
-        ifmap_l.append(np.random.normal(0, 10, (image_size[0][0], image_size[0][1],
-        in_chn[0])).astype(np.int64))
+        saved_weights = np.load("../cnn/90.npy")
+        weights = []
+        biases = []
+        for w in saved_weights:
+            kernel, bias = w
+            weights.append(np.asarray(kernel))
+            biases.append(np.asarray(bias))
+        print(np.shape(weights))
+        print(np.shape(biases))
+
+        # Do layers manually because of various difficulties
+        # first layer
+        #print(weights[0])
+        #print(biases[0])
+        ofmap = conv(ifmap, weights[0], biases[0])
+        ofmap = ReLU(ofmap)
+        print(np.shape(ofmap))
+        
+        # second layer
+        ifmap = ofmap
+        ofmap = one_layer(image_size[1], filter_size[1], in_chn[1], out_chn[1], block_size[1], ifmap, weights[1], biases[1],  num_nonzero[1], pruner_name)
+        ofmap = ReLU(ofmap)
+        ofmap = MAXPOOL(ofmap, 2)
+        print(np.shape(ofmap))
+
+        # third layer
+        ifmap = ofmap
+        ofmap = one_layer(image_size[2], filter_size[2], in_chn[2], out_chn[2], block_size[2], ifmap, weights[2], biases[2],  num_nonzero[2], pruner_name)
+        ofmap = ReLU(ofmap)
+        ofmap = MAXPOOL(ofmap, 2)
+        print(np.shape(ofmap))
+
+        # fourth layer
+        print(np.shape(ofmap))
     ###############################################
 
-    #consecutive_conv_layers:
-    #       True: no pooling or other layers between the conv layers, the simulator takes in the very fisrt ifmap and run consecutively
-    #       False: each layer's ifmap is supplied in the ifmap list
     
-    #consecutive_conv_layers = False
-    consecutive_conv_layers = True
 
-    if consecutive_conv_layers:
-        print("assuming the simulator is running consective conv layers")
-    else:
-        print("inconsecutive conv layers: each layer's ifmap is supplied by the user")
+#print("-----ofmap-------")
+#print(np.shape(ofmap))
+#print(ofmap)
+
+#test_ReLU = ReLU(ofmap)
+#print("------test_ReLU------")
+#print(test_ReLU)
     
-    for l in range(num_layer):
-        if l == 0:
-            ifmap = ifmap_l[l]
-        ofmap = one_layer(image_size[l], filter_size[l], in_chn[l], out_chn[l], block_size[l], ifmap, weights[l], bias[l],  num_nonzero[l], pruner_name)
-        if consecutive_conv_layers:
-            ifmap = ofmap
-        else:
-            ifmap = ifmap_l[l+1]
-
-print("-----ofmap-------")
-print(ofmap)
-
-test_ReLU = ReLU(ofmap)
-print("------test_ReLU------")
-print(test_ReLU)
-    
-test_pool = MAXPOOL(ofmap,2)
-print("------testpool------")
-print(test_pool)
+#test_pool = MAXPOOL(ofmap,2)
+#print("------testpool------")
+#print(test_pool)
 
