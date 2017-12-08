@@ -4,6 +4,9 @@ from osarch import OSArch
 from stimulus import Stimulus
 import numpy as np
 
+from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
+
 #debug = True # allows switching between a main testing conv and a debug one
 debugStimulus = False # if true, uses integer and increasing values for inputs, weights, and biases
 keepMaxValues = True # if true, always keeps num_nonzero values in each block
@@ -101,6 +104,23 @@ if __name__ == "__main__":
     #pruner_name = "NaivePruner"
     pruner_name = "ThresholdPruner"
     pruner_name = "ClusteredPruner"
+    ######## real inputs #########################
+    test_data = mnist.test.next_batch(1)
+    inputs = np.asarray(test_data[0]).astype(np.int64)
+    expected_outputs = test_data[1]
+    ifmap_l = []
+    
+    inputs = inputs.reshape((-1, 28, 28, 1))
+    print(np.shape(inputs[0]))
+    padded_inputs = np.lib.pad(inputs[0], ((2,2),(2,2),(0,0)), 'constant')
+    print(np.shape(padded_inputs))
+    ifmap_l.append(padded_inputs)
+
+    saved_weights = np.load("../cnn/")
+
+    for layer in range(num_layer):
+        ifmap_l.append(np.random.normal(0, 10, (image_size[0][0], image_size[0][1],
+        in_chn[0])).astype(np.int64))
     ###############################################
 
     #consecutive_conv_layers:
