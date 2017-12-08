@@ -6,7 +6,7 @@ from nnsim.channel import Channel
 from nnsim.simulator import Finish
 
 from converter import Converter
-from naive_pruner import NaivePruner
+from pruner import *
 
 class ConverterTB(Module):
     def instantiate(self):
@@ -23,7 +23,7 @@ class ConverterTB(Module):
         self.out_chn = Channel()
 
         self.converter = Converter(self.in_chn, self.mid_chn, self.input_size, self.block_size)
-        self.pruner = NaivePruner(self.mid_chn,self.out_chn,self.num_nonzero,self.preserve_order)
+        self.pruner = ClusteredPruner(self.mid_chn,self.out_chn,self.num_nonzero, self.block_size, self.preserve_order)
 
         self.iterations = 10
         self.iteration = 0
@@ -53,8 +53,8 @@ class ConverterTB(Module):
         if (self.out_chn.valid()):
             data = self.out_chn.pop()
             print(data)
-            if (data[2] == 1):
-                self.out_counter += 1
+            #print("out_counter: ", self.out_counter)
+            self.out_counter += 1
             if (self.out_counter == self.iterations):
                 raise Finish("Check manually")
 

@@ -98,7 +98,8 @@ if __name__ == "__main__":
 
     bias = [np.random.normal(0, 10, out_chn[0]).astype(np.int64) for layer in range(num_layer)]
 
-    pruner_name = "NaivePruner"
+    #pruner_name = "NaivePruner"
+    pruner_name = "ClusteredPruner"
     ###############################################
 
     #consecutive_conv_layers:
