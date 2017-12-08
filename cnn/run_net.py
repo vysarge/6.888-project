@@ -1,5 +1,6 @@
 from tensorflow.examples.tutorials.mnist import input_data
 import tensorflow as tf
+import numpy as np
 
 # Configuration variables
 training = True
@@ -10,7 +11,8 @@ model_path = 'model' + os_slash
 model_name = model_path + 'model'
 epochs = 10
 
-steps = 200000
+steps = 300000
+#steps = 10000
 
 device_name = "/cpu:0"
 #device_name = "/gpu:0"
@@ -106,6 +108,7 @@ def train():
 
             print('test accuracy %g' % accuracy.eval(feed_dict={
                 x: mnist.test.images, y_: mnist.test.labels, p_retain: 1.0}))
+            weights_to_output = []
             for layer in layers:
                 kernel, bias = layer
                 print("kernel------------------------------------------")
@@ -113,6 +116,8 @@ def train():
                 print("bias--------------------------------------------")
                 print(sess.run(bias))
                 print("------------------------------------------------")
+                weights_to_output.append((sess.run(kernel), sess.run(bias)))
+            np.save("model_weights", weights_to_output)
 
 if training:
     train()
