@@ -10,7 +10,7 @@ model_path = 'model' + os_slash
 model_name = model_path + 'model'
 epochs = 10
 
-steps = 50000
+steps = 200000
 
 device_name = "/cpu:0"
 #device_name = "/gpu:0"
