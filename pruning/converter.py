@@ -25,25 +25,34 @@ class Converter(Module):
         
         # Buffer.  Use for accumulating input values
         self.buffer = [[0 for j in range(self.input_size)] for i in range(self.in_sets)]
+        self.buffer_valid = False
 
         # channels
         self.in_chn = in_chn
         self.out_chn = out_chn
 
     def tick(self):
+        #print(self.out_marker)
+        #print("{} == {}".format(((self.curr_set + 1) % self.in_sets),self.out_marker // self.input_size))
         # Once data is accumulated (placed first to prevent this from happening on the same cycle)
-        if not (((self.out_marker) % self.block_size) // self.input_size == self.curr_set):
+        #if not (((self.out_marker) % self.block_size) // self.input_size == self.curr_set):
+        if (self.buffer_valid and self.out_chn.vacancy()):
             # Do this on the last cycle
             if (self.out_marker == self.block_size):
                 if (len(self.prev_vals) == 0): # guarantee we will always send /something/ per block
                     self.out_chn.push([0,0,1])
+                    #print("Converter output:")
+                    #print([0,0,1])
                 else:
                     self.prev_vals.append(1)
                     self.out_chn.push(self.prev_vals)
+                    #print("Converter output:")
+                    #print(self.prev_vals)
 
                 # Go to next block
                 self.prev_vals = []
                 self.out_marker = 0
+                self.buffer_valid = False
             else:
                 # pull out and check current value
                 # if nonzero and there's room to push to the buffer, do so
@@ -56,6 +65,8 @@ class Converter(Module):
                     if (len(self.prev_vals) > 0):
                         self.prev_vals.append(0)
                         self.out_chn.push(self.prev_vals)
+                        #print("Converter output:")
+                        #print(self.prev_vals)
                     self.prev_vals = [self.out_marker, curr_val]
                     self.out_marker += 1
                 elif (curr_val == 0):
@@ -65,12 +76,15 @@ class Converter(Module):
 
 
         # Accumulate data for pruning etc
-        if (self.in_chn.valid() and not \
-                ((self.curr_set + 1) % self.in_sets) == self.out_marker // self.input_size):
+        #if (((self.curr_set + 1) % self.in_sets) == self.out_marker // self.input_size and not ((self.curr_set + 1) % self.in_sets)==0):
+        #    pass
+        if (self.in_chn.valid() and not self.buffer_valid):
             data = self.in_chn.pop()
+            #print(data)
             self.buffer[self.curr_set] = data
             self.curr_set += 1
             if (self.curr_set == self.in_sets):
+                self.buffer_valid = True
                 self.curr_set = 0
 
 
