@@ -83,6 +83,7 @@ def one_layer(image_size, filter_size, in_chn, out_chn, block_size, ifmap, weigh
 
 if __name__ == "__main__":
     from nnsim.simulator import run_tb
+    from swlayers import *
 
     ######## fake inputs #########################
     num_layer = 3
@@ -144,6 +145,14 @@ if __name__ == "__main__":
         else:
             ifmap = ifmap_l[l+1]
 
+print("-----ofmap-------")
+print(ofmap)
 
-
+test_ReLU = ReLU(ofmap)
+print("------test_ReLU------")
+print(test_ReLU)
+    
+test_pool = MAXPOOL(ofmap,2)
+print("------testpool------")
+print(test_pool)
 
