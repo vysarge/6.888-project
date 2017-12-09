@@ -1,0 +1,481 @@
+Image 0-----------------------------------
+
+cyc 255863: Done processing
+
+cyc 32157: Done processing
+5 =?= 9
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+5 =?= 9
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+5 =?= 9
+Incorrect prediction
+Image 1-----------------------------------
+
+cyc 254855: Done processing
+
+cyc 32175: Done processing
+5 =?= 9
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+5 =?= 9
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+8 =?= 9
+Incorrect prediction
+Image 2-----------------------------------
+
+cyc 257987: Done processing
+
+cyc 32679: Done processing
+5 =?= 5
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 5
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+3 =?= 5
+Incorrect prediction
+Image 3-----------------------------------
+
+cyc 257807: Done processing
+
+cyc 32751: Done processing
+3 =?= 3
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 3
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+7 =?= 3
+Incorrect prediction
+Image 4-----------------------------------
+
+cyc 252659: Done processing
+
+cyc 31959: Done processing
+5 =?= 1
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 1
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+2 =?= 1
+Incorrect prediction
+Image 5-----------------------------------
+
+cyc 259751: Done processing
+
+cyc 32967: Done processing
+2 =?= 2
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 2
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+7 =?= 2
+Incorrect prediction
+Image 6-----------------------------------
+
+cyc 256691: Done processing
+
+cyc 32373: Done processing
+5 =?= 1
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+5 =?= 1
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+5 =?= 1
+Incorrect prediction
+Image 7-----------------------------------
+
+cyc 256403: Done processing
+
+cyc 32301: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 6
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+3 =?= 6
+Incorrect prediction
+Image 8-----------------------------------
+
+cyc 254603: Done processing
+
+cyc 31923: Done processing
+5 =?= 1
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+5 =?= 1
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+5 =?= 1
+Incorrect prediction
+Image 9-----------------------------------
+
+cyc 261263: Done processing
+
+cyc 33075: Done processing
+8 =?= 6
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 6
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+3 =?= 6
+Incorrect prediction
+Image 10-----------------------------------
+
+cyc 258239: Done processing
+
+cyc 32805: Done processing
+8 =?= 0
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+5 =?= 0
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+1 =?= 0
+Incorrect prediction
+Image 11-----------------------------------
+
+cyc 256655: Done processing
+
+cyc 32409: Done processing
+7 =?= 7
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+7 =?= 7
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+8 =?= 7
+Incorrect prediction
+Image 12-----------------------------------
+
+cyc 258563: Done processing
+
+cyc 32697: Done processing
+4 =?= 4
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+5 =?= 4
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+5 =?= 4
+Incorrect prediction
+Image 13-----------------------------------
+
+cyc 255863: Done processing
+
+cyc 32337: Done processing
+5 =?= 9
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+5 =?= 9
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+5 =?= 9
+Incorrect prediction
+Image 14-----------------------------------
+
+cyc 258131: Done processing
+
+cyc 32661: Done processing
+8 =?= 8
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+5 =?= 8
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+5 =?= 8
+Incorrect prediction
+Image 15-----------------------------------
+
+cyc 257447: Done processing
+
+cyc 32481: Done processing
+5 =?= 9
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+5 =?= 9
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+3 =?= 9
+Incorrect prediction
+Image 16-----------------------------------
+
+cyc 259679: Done processing
+
+cyc 32949: Done processing
+2 =?= 6
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 6
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+3 =?= 6
+Incorrect prediction
+Image 17-----------------------------------
+
+cyc 258995: Done processing
+
+cyc 32643: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+5 =?= 6
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+5 =?= 6
+Incorrect prediction
+Image 18-----------------------------------
+
+cyc 257591: Done processing
+
+cyc 32445: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 6
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+3 =?= 6
+Incorrect prediction
+Image 19-----------------------------------
+
+cyc 257735: Done processing
+
+cyc 32697: Done processing
+5 =?= 0
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 0
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+7 =?= 0
+Incorrect prediction
+Image 20-----------------------------------
+
+cyc 257483: Done processing
+
+cyc 32553: Done processing
+5 =?= 9
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 9
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+3 =?= 9
+Incorrect prediction
+Image 21-----------------------------------
+
+cyc 255071: Done processing
+
+cyc 32301: Done processing
+5 =?= 7
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+7 =?= 7
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+5 =?= 7
+Incorrect prediction
+Image 22-----------------------------------
+
+cyc 254639: Done processing
+
+cyc 32121: Done processing
+5 =?= 1
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 1
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+5 =?= 1
+Incorrect prediction
+Image 23-----------------------------------
+
+cyc 259067: Done processing
+
+cyc 32751: Done processing
+3 =?= 3
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 3
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+3 =?= 3
+Correct prediction
+Image 24-----------------------------------
+
+cyc 257267: Done processing
+
+cyc 32391: Done processing
+5 =?= 7
+Incorrect prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+5 =?= 7
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+5 =?= 7
+Incorrect prediction
+For num_nonzero: [4, 4, 4, None]
+10/25 correct
+For num_nonzero: [2, 2, 2, None]
+4/25 correct
+For num_nonzero: [1, 1, 1, None]
+1/25 correct
