@@ -6,7 +6,7 @@ from serdes import InputSerializer, OutputDeserializer
 
 def conv(x, W, b):
     # print x.shape, W.shape, b.shape
-    y = np.zeros([x.shape[0], x.shape[1], W.shape[3]]).astype(np.int64)
+    y = np.zeros([x.shape[0], x.shape[1], W.shape[3]])#.astype(np.int64)
     for out_channel in range(W.shape[3]):
         for in_channel in range(W.shape[2]):
             W_c = W[:, :, in_channel, out_channel]
@@ -67,7 +67,8 @@ class Stimulus(Module):
                             cmax = cmin + self.block_size
                             ifmap[x][y][cmin:cmax] = [ifmap[x][y][c] if c in to_keep else 0 for c in range(cmin, cmax)]
         else:
-            print("Don't worry about validation failure messages if using pruning")
+            pass
+            #print("Don't worry about validation failure messages if using pruning")
         #print("From stimulus:")
         #print("ifmap")
         #print(ifmap)
@@ -76,7 +77,7 @@ class Stimulus(Module):
         #print("bias")
         #print(bias)
         self.ofmap = np.zeros((image_size[0], image_size[1],
-            out_chn)).astype(np.int64)
+            out_chn))#.astype(np.int64)
 
         # Reference Output
         reference = conv(ifmap, weights, bias)

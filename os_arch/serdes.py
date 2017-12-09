@@ -135,7 +135,7 @@ class InputSerializer(Module):
             cmin = self.bias_set*self.block_size
             cmax = cmin + self.block_size
             data = np.array([ self.bias[c] for c in range(cmin, cmax) ])
-            #print("bias")
+            #print("bias (input serializer):")
             #print(data)
             self.arch_input_chn.push(data)
             self.bias_set += 1
@@ -165,8 +165,8 @@ class InputSerializer(Module):
                 if (self.curr_x == self.image_size[0]):
                     self.curr_x = 0
                     self.ifmap_psum_done = True
-                    print("InputSerializer: Inputs and biases written") 
-                    print("Continue flushing with zeros")       
+                    #print("InputSerializer: Inputs and biases written") 
+                    #print("Continue flushing with zeros")       
         
 
 
@@ -329,14 +329,15 @@ class OutputDeserializer(Module):
             if self.fmap_idx == fmap_per_iteration:
                 self.fmap_idx = 0
                 self.pass_done.wr(True)
-                if np.all(self.ofmap == self.reference):
-                    raise Finish("Success")
-                else:
-                    print("Output")
-                    print(self.ofmap)
-                    print("Reference")
-                    print(self.reference)
-                    print("Diff")
-                    print(self.ofmap-self.reference)
-                    raise Finish("Validation Failed")
+                raise Finish("Done processing")
+                # if np.all(self.ofmap == self.reference):
+                #     raise Finish("Success")
+                # else:
+                #     #print("Output")
+                #     #print(self.ofmap)
+                #     #print("Reference")
+                #     #print(self.reference)
+                #     #print("Diff")
+                #     #print(self.ofmap-self.reference)
+                #     raise Finish("Validation Failed")
 

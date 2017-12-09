@@ -24,11 +24,11 @@ class IFMapWeightsGLB(Module):
         self.raw_stats = {'size' : (ifmap_glb_depth, num_nonzero*3), 'rd': 0, 'wr': 0}
 
 
-        self.isram = SRAM(ifmap_glb_depth, num_nonzero*3)
+        self.isram = SRAM(ifmap_glb_depth, num_nonzero*3, dtype=np.float16)
         self.ilast_read = Channel(3)
         self.ifmap_glb_depth = ifmap_glb_depth
 
-        self.wsram = SRAM(weights_glb_depth, block_size)
+        self.wsram = SRAM(weights_glb_depth, block_size, dtype=np.float16)
         self.wlast_read = Channel(1)
         # Channel depth of one here prevents SRAM reads from colliding
         # was having issues with a later read 'replacing' an earlier one
@@ -244,7 +244,7 @@ class IFMapWeightsGLB(Module):
 
                     # Assertion checks that we will not attempt to read data that
                     # has not yet been stored in memory
-                    waddr = self.base_addr_wo_chn + data[0]*out_sets
+                    waddr = self.base_addr_wo_chn + int(data[0])*out_sets
                     assert (self.wwr_done or waddr < self.addr)
                     #self.wsram.request(RD, waddr)
                     #self.wlast_read.push(False)
@@ -276,7 +276,7 @@ class IFMapWeightsGLB(Module):
                         if (self.curr_x == self.image_size[0]):
                             self.curr_x = 0
                             self.ifmap_done = True
-                            print("Done sending inputs from iw glb")
+                            #print("Done sending inputs from iw glb")
                             self.ready_to_output = False
                             self.inputs_to_flush = 1
                             self.weights_to_flush = self.arr_y // self.block_size
@@ -517,7 +517,7 @@ class PSumGLB(Module):
         self.stat_type = 'show'
         self.raw_stats = {'size' : (glb_depth, block_size), 'rd': 0, 'wr': 0}
 
-        self.sram = SRAM(glb_depth, block_size, nports=2)
+        self.sram = SRAM(glb_depth, block_size, nports=2, dtype=np.float16)
         self.last_read = Channel(3)
 
         self.filter_size = (0, 0)

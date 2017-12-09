@@ -5,13 +5,13 @@ from stimulus import Stimulus
 import numpy as np
 from swlayers import *
 
-from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
+#from tensorflow.examples.tutorials.mnist import input_data
+#mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
 
 #debug = True # allows switching between a main testing conv and a debug one
 debugStimulus = False # if true, uses integer and increasing values for inputs, weights, and biases
 keepMaxValues = True # if true, always keeps num_nonzero values in each block
-do_premature_prune = True # if true, will pre-prune inputs to allow output deserializer to do correct validation
+do_premature_prune = False # if true, will pre-prune inputs to allow output deserializer to do correct validation
 # For actual test runs, should be False, False, True, False
 
 class OSArchTB(Module):
@@ -79,7 +79,6 @@ def one_layer(image_size, filter_size, in_chn, out_chn, block_size, ifmap, weigh
     return os_tb.stimulus.ofmap
 
 
-
 if __name__ == "__main__":
     from nnsim.simulator import run_tb
     from swlayers import *
@@ -136,54 +135,70 @@ if __name__ == "__main__":
         in_chn = [1, 16, 16, 8]
         out_chn = [16, 16, 8, None]
         block_size = [8, 8, 8, None]
-        num_nonzero = [8, 8, 8, None]
+        num_nonzeros = [[8, 8, 8, None], [4, 4, 4, None], [2, 2, 2, None], [1, 1, 1, None]]
         pruner_name = "NaivePruner"
 
-        print("Input generation-------------------------------")
-        test_data = mnist.test.next_batch(1)
-        inputs = np.asarray(test_data[0]).astype(np.int64)
-        expected_outputs = test_data[1]
-        #ifmap_l = []
-        
-        inputs = inputs.reshape((-1, 28, 28, 1))
-        padded_inputs = np.lib.pad(inputs[0], ((2,2),(2,2),(0,0)), 'constant')
-        #ifmap_l.append(padded_inputs)
-        ifmap = padded_inputs
-
-        saved_weights = np.load("../cnn/90.npy")
+        # Load weights and biases from file
+        saved_weights = np.load("../cnn/98.npy")
         weights = []
         biases = []
         for w in saved_weights:
             kernel, bias = w
             weights.append(np.asarray(kernel))
             biases.append(np.asarray(bias))
-        print(np.shape(weights))
-        print(np.shape(biases))
 
-        # Do layers manually because of various difficulties
-        # first layer
-        #print(weights[0])
-        #print(biases[0])
-        ofmap = conv(ifmap, weights[0], biases[0])
-        ofmap = ReLU(ofmap)
-        print(np.shape(ofmap))
-        
-        # second layer
-        ifmap = ofmap
-        ofmap = one_layer(image_size[1], filter_size[1], in_chn[1], out_chn[1], block_size[1], ifmap, weights[1], biases[1],  num_nonzero[1], pruner_name)
-        ofmap = ReLU(ofmap)
-        ofmap = MAXPOOL(ofmap, 2)
-        print(np.shape(ofmap))
+        # Load inputs and expected outputs from file
+        all_inputs = np.load("inputs25.npy")
+        all_expected = np.load("expected25.npy")
+        num_correct = [0 for i in range(len(num_nonzeros))]
+        num_total = [25 for i in range(len(num_nonzeros))]
+        for i in range(25):
+            print("Image {}-----------------------------------".format(i))
+            inputs = np.asarray(all_inputs[i]).astype(np.float16)
+            expected_outputs = all_expected[i]
+            
+            inputs = inputs.reshape((-1, 28, 28, 1))
+            padded_inputs = np.lib.pad(inputs[0], ((2,2),(2,2),(0,0)), 'constant')
+            
+            for j in range(len(num_nonzeros)):
+                num_nonzero = num_nonzeros[j]
+                #print("Testing num_nonzero: {}".format(num_nonzero))
+                ifmap = padded_inputs
 
-        # third layer
-        ifmap = ofmap
-        ofmap = one_layer(image_size[2], filter_size[2], in_chn[2], out_chn[2], block_size[2], ifmap, weights[2], biases[2],  num_nonzero[2], pruner_name)
-        ofmap = ReLU(ofmap)
-        ofmap = MAXPOOL(ofmap, 2)
-        print(np.shape(ofmap))
+                # Do layers manually because of various difficulties
+                # first layer
+                ofmap = conv(ifmap, weights[0], biases[0])
+                ofmap = ReLU(ofmap)
+                
+                # second layer
+                ifmap = ofmap
+                ofmap = one_layer(image_size[1], filter_size[1], in_chn[1], out_chn[1], block_size[1], ifmap, weights[1], biases[1],  num_nonzero[1], pruner_name)
+                ofmap = ReLU(ofmap)
+                ofmap = MAXPOOL(ofmap, 2)
 
-        # fourth layer
-        print(np.shape(ofmap))
+                # third layer
+                ifmap = ofmap
+                ofmap = one_layer(image_size[2], filter_size[2], in_chn[2], out_chn[2], block_size[2], ifmap, weights[2], biases[2],  num_nonzero[2], pruner_name)
+                ofmap = ReLU(ofmap)
+                ofmap = MAXPOOL(ofmap, 2)
+
+                # fourth layer
+                flat = np.reshape(ofmap, [1, -1])
+                result = np.dot(flat, saved_weights[3][0]) + saved_weights[3][1]
+                soft = softmax(result)
+                m_idx = np.argmax(soft)
+                exp_idx = np.argmax(expected_outputs)
+
+                print("{} =?= {}".format(m_idx, exp_idx))
+                if (m_idx == np.argmax(expected_outputs)):
+                    num_correct[j] += 1
+                    print("Correct prediction")
+                else:
+                    print("Incorrect prediction")
+        for j in range(len(num_nonzeros)):
+            print("For num_nonzero: {}".format(num_nonzeros[j]))
+            print("{}/{} correct".format(num_correct[j], num_total[j]))
+
     ###############################################
 
     
