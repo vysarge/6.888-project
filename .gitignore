@@ -1,5 +1,6 @@
 nnsim.egg-info/*
-nnsim/__pycache__/*
-pruning/__pycache__/*
-cnn/MNIST_data/*
+*/__pycache__/*
+*/MNIST_data/*
 */out.txt
+MNIST_data/*
+*.pyc
