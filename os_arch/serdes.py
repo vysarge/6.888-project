@@ -35,7 +35,7 @@ class InputSerializer(Module):
 
         #user defined pruner for this layer, default to naive pruner
         self.pruner = getattr(pruner, pruner_name)(self.prune_chn,self.arch_input_chn, \
-            self.num_nonzero,True)
+            self.num_nonzero, self.block_size, True)
 
         
         self.ifmap = None

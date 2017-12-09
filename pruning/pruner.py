@@ -158,7 +158,8 @@ class ClusteredPruner(Module):
         # and perform pruning
         if (self.in_chn.valid() and not self.ready_to_switch):
             data = self.in_chn.pop()                    
-            #store the data in the storage buffer              
+            #store the data in the storage buffer    
+            # print("valid_marker: ", self.valid_marker, "block_size: ",self.block_size)          
             self.storage[self.valid_marker] = [data[0], data[1]]
             self.valid_marker += 1
             if data[2] == 1:   #if this is the last data of the block, need to prune the block and store it to write-to buffer  

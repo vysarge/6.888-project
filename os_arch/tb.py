@@ -136,7 +136,8 @@ if __name__ == "__main__":
         out_chn = [16, 16, 8, None]
         block_size = [8, 8, 8, None]
         num_nonzeros = [[8, 8, 8, None], [4, 4, 4, None], [2, 2, 2, None], [1, 1, 1, None]]
-        pruner_name = "NaivePruner"
+        #pruner_name = "NaivePruner"
+        pruner_name = "ClusteredPruner"
 
         # Load weights and biases from file
         saved_weights = np.load("../cnn/98.npy")
