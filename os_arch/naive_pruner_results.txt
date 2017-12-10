@@ -1,0 +1,633 @@
+Image 0-----------------------------------
+
+cyc 370106: Done processing
+^[[A
+cyc 40356: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 255863: Done processing
+
+cyc 34209: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+4 =?= 9
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+1 =?= 9
+Incorrect prediction
+Image 1-----------------------------------
+
+cyc 369170: Done processing
+
+cyc 40494: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 254855: Done processing
+
+cyc 34443: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+1 =?= 9
+Incorrect prediction
+Image 2-----------------------------------
+
+cyc 374858: Done processing
+
+cyc 41274: Done processing
+5 =?= 5
+Correct prediction
+
+cyc 257987: Done processing
+
+cyc 34101: Done processing
+5 =?= 5
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 5
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+4 =?= 5
+Incorrect prediction
+Image 3-----------------------------------
+
+cyc 373814: Done processing
+
+cyc 41832: Done processing
+3 =?= 3
+Correct prediction
+
+cyc 257807: Done processing
+
+cyc 34317: Done processing
+3 =?= 3
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 3
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+9 =?= 3
+Incorrect prediction
+Image 4-----------------------------------
+
+cyc 361646: Done processing
+
+cyc 39258: Done processing
+1 =?= 1
+Correct prediction
+
+cyc 252659: Done processing
+
+cyc 34335: Done processing
+1 =?= 1
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+1 =?= 1
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+1 =?= 1
+Correct prediction
+Image 5-----------------------------------
+
+cyc 378458: Done processing
+
+cyc 42984: Done processing
+2 =?= 2
+Correct prediction
+
+cyc 259751: Done processing
+
+cyc 34119: Done processing
+2 =?= 2
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+2 =?= 2
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+4 =?= 2
+Incorrect prediction
+Image 6-----------------------------------
+
+cyc 372842: Done processing
+
+cyc 40860: Done processing
+1 =?= 1
+Correct prediction
+
+cyc 256691: Done processing
+
+cyc 34119: Done processing
+1 =?= 1
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+1 =?= 1
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+1 =?= 1
+Correct prediction
+Image 7-----------------------------------
+
+cyc 371906: Done processing
+
+cyc 40122: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 256403: Done processing
+
+cyc 34083: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+4 =?= 6
+Incorrect prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+1 =?= 6
+Incorrect prediction
+Image 8-----------------------------------
+
+cyc 368450: Done processing
+
+cyc 39510: Done processing
+1 =?= 1
+Correct prediction
+
+cyc 254603: Done processing
+
+cyc 34155: Done processing
+1 =?= 1
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+1 =?= 1
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+1 =?= 1
+Correct prediction
+Image 9-----------------------------------
+
+cyc 382958: Done processing
+
+cyc 42624: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 261263: Done processing
+
+cyc 34065: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+4 =?= 6
+Incorrect prediction
+Image 10-----------------------------------
+
+cyc 376478: Done processing
+
+cyc 42318: Done processing
+0 =?= 0
+Correct prediction
+
+cyc 258239: Done processing
+
+cyc 34029: Done processing
+0 =?= 0
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+0 =?= 0
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+1 =?= 0
+Incorrect prediction
+Image 11-----------------------------------
+
+cyc 371906: Done processing
+
+cyc 40914: Done processing
+7 =?= 7
+Correct prediction
+
+cyc 256655: Done processing
+
+cyc 34119: Done processing
+7 =?= 7
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+7 =?= 7
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+4 =?= 7
+Incorrect prediction
+Image 12-----------------------------------
+
+cyc 375146: Done processing
+
+cyc 42066: Done processing
+4 =?= 4
+Correct prediction
+
+cyc 258563: Done processing
+
+cyc 34209: Done processing
+4 =?= 4
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+4 =?= 4
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+4 =?= 4
+Correct prediction
+Image 13-----------------------------------
+
+cyc 368810: Done processing
+
+cyc 40428: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 255863: Done processing
+
+cyc 34137: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+9 =?= 9
+Correct prediction
+Image 14-----------------------------------
+
+cyc 374858: Done processing
+
+cyc 41742: Done processing
+8 =?= 8
+Correct prediction
+
+cyc 258131: Done processing
+
+cyc 34227: Done processing
+8 =?= 8
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+8 =?= 8
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+4 =?= 8
+Incorrect prediction
+Image 15-----------------------------------
+
+cyc 373742: Done processing
+
+cyc 41040: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 257447: Done processing
+
+cyc 34011: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+1 =?= 9
+Incorrect prediction
+Image 16-----------------------------------
+
+cyc 376046: Done processing
+
+cyc 42300: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 259679: Done processing
+
+cyc 33957: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+4 =?= 6
+Incorrect prediction
+Image 17-----------------------------------
+
+cyc 378674: Done processing
+
+cyc 41688: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 258995: Done processing
+
+cyc 34029: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+1 =?= 6
+Incorrect prediction
+Image 18-----------------------------------
+
+cyc 374354: Done processing
+
+cyc 40698: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 257591: Done processing
+
+cyc 34029: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+6 =?= 6
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+7 =?= 6
+Incorrect prediction
+Image 19-----------------------------------
+
+cyc 373202: Done processing
+
+cyc 41616: Done processing
+0 =?= 0
+Correct prediction
+
+cyc 257735: Done processing
+
+cyc 34011: Done processing
+0 =?= 0
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+0 =?= 0
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+9 =?= 0
+Incorrect prediction
+Image 20-----------------------------------
+
+cyc 372914: Done processing
+
+cyc 40860: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 257483: Done processing
+
+cyc 34155: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+9 =?= 9
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+4 =?= 9
+Incorrect prediction
+Image 21-----------------------------------
+
+cyc 369242: Done processing
+
+cyc 40554: Done processing
+7 =?= 7
+Correct prediction
+
+cyc 255071: Done processing
+
+cyc 34245: Done processing
+7 =?= 7
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+7 =?= 7
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+9 =?= 7
+Incorrect prediction
+Image 22-----------------------------------
+
+cyc 367046: Done processing
+
+cyc 39456: Done processing
+1 =?= 1
+Correct prediction
+
+cyc 254639: Done processing
+
+cyc 34047: Done processing
+1 =?= 1
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+1 =?= 1
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+1 =?= 1
+Correct prediction
+Image 23-----------------------------------
+
+cyc 376838: Done processing
+
+cyc 41778: Done processing
+3 =?= 3
+Correct prediction
+
+cyc 259067: Done processing
+
+cyc 34245: Done processing
+3 =?= 3
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+3 =?= 3
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+4 =?= 3
+Incorrect prediction
+Image 24-----------------------------------
+
+cyc 374606: Done processing
+
+cyc 41058: Done processing
+7 =?= 7
+Correct prediction
+
+cyc 257267: Done processing
+
+cyc 34065: Done processing
+7 =?= 7
+Correct prediction
+
+cyc 142305: Done processing
+
+cyc 17603: Done processing
+7 =?= 7
+Correct prediction
+
+cyc 71616: Done processing
+
+cyc 9831: Done processing
+4 =?= 7
+Incorrect prediction
+For num_nonzero: [8, 8, 8, None]
+25/25 correct
+For num_nonzero: [4, 4, 4, None]
+25/25 correct
+For num_nonzero: [2, 2, 2, None]
+22/25 correct
+For num_nonzero: [1, 1, 1, None]
+6/25 correct
